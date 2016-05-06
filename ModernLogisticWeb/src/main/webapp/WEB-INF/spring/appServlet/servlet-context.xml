@@ -42,5 +42,17 @@
 		<beans:property name="url" value="jdbc:firebirdsql:192.168.20.17/3050:alter"/>
 		<beans:property name="username" value="SYSDBA"/>
 		<beans:property name="password" value="strongpass"/>
+		<!-- <beans:property name="connectionProperties" value="[encoding=win1251;]"/> -->
+	</beans:bean>
+	
+	<beans:bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false">
+		<beans:property name="targetObject" ref="dataSource" />
+		<beans:property name="targetMethod" value="addConnectionProperty" />
+		<beans:property name="arguments">
+			<beans:list>
+				<beans:value>characterEncoding</beans:value>
+				<beans:value>windows-1251</beans:value>
+			</beans:list>
+		</beans:property>
 	</beans:bean>
 </beans:beans>
