@@ -5,6 +5,7 @@ package com.rosteach.controllers;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -47,7 +48,6 @@ public class XMLController {
 				
 				byte[] fileBytes = file[i].getBytes();	
 				fileName=file[i].getOriginalFilename();
-				
                 File newFile = new File(directory.getAbsolutePath() + fileName);
                 
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(newFile));
