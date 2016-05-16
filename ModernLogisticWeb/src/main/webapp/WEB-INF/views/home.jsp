@@ -33,7 +33,7 @@
 	</div>
 	<div id="content">
 		<div class="firstline">
-			<div class="item"><a href="Tools"><img src="resources/images/gear_tools_256.png" width=150px  height=150px/></a><div class="icon"><h3>Tools</h3></div></div>
+			<div class="item"><a href="Tools"><img src="resources/images/tools.png" width=150px  height=150px/></a><div class="icon"><h3>Tools</h3></div></div>
 			<div class="item"><a href="AjaxExmpl"><img src="resources/images/data-solution.png" width=150px  height=150px/></a><div class="icon"><h3>Data</h3></div></div>
 			<div class="item"><a href="#"><img src="resources/images/closed.png" width=150px  height=150px/></a><div class="icon"><h3>N/A</h3></div></div>
 			<div class="item"><a href="#"><img src="resources/images/closed.png" width=150px  height=150px/></a><div class="icon"><h3>N/A</h3></div>
