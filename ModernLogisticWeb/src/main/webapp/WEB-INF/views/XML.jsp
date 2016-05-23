@@ -5,7 +5,7 @@
 <title>XML</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.css"/>
+	<link rel="stylesheet" type="text/css" href="resources/css/xml.css"/>
 	<!-- JS -->
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<script type="text/javascript" src="resources/js/jquery-ui.js"></script>
@@ -21,20 +21,28 @@
         <div class="infoBar">
             <div class="infoBarLeft">
                 <div class="infoBarIcon" title="Put your Foto">
-                	 <img src="resources/images/userFoto.png" width=90px height=90px;/>
+                	 <img src="resources/images/userFoto.png" width=70px height=70px;/>
                 </div>
             </div>
             <div class="infoBarCenter">
                 <h1>Modern Logistic S<img class="logoIcon" src="resources/images/citizen_globe.gif" width=25px  height=25px/>ftware</h1>
             </div>
             <div class="infoBarRight">
-            	<img src="resources/images/Xmltool.png" width=100px height=100px;/>
+            	<img src="resources/images/Xmltool.png" width=70px height=70px;/>
             </div>
         </div>
     </div>
     <div id="tabs">
     	<div id="loader">
             <img src="resources/images/cloud_loading_256.gif" alt="Loader" width=150px height=150px;/>
+        </div>
+        <div id="errormessage">
+        	<p class="errMess"></p>
+        	<button class="errMessCancel">Отмена</button>
+        </div>
+        <div id="applymessage">
+        	<p class="applMess"></p>
+        	<button class="applMessApply" type="submit" form="rightForm">Подтвердить</button><button class="applMessCancel">Отменить</button>
         </div>
         <div id="overlay"></div>
         <ul>
@@ -45,6 +53,7 @@
         <div id="tabs-1">
            <div class="leftBar">
                 <div class="back" title="Tools"><a href="Tools"><img src="resources/images/left_arrow.png" width=30px height=30px;/></a></div>
+                <div class="home" title="Home"><a href="<%=request.getContextPath()%>/"><img src="resources/images/home_w.png" width=30px height=30px;/></a></div>
                 <div class="info" title="Info"><a href="Tools"><img src="resources/images/info.png" width=30px height=30px;/></a></div>
             </div>    
             <div class ="leftTA">
@@ -80,7 +89,7 @@
                         <input type="password" name="password" placeholder="password" required="required"/>
                     </form>
                     <div class="pushButtRight">
-                        <button class="push" type="submit" form="rightForm"><img src="resources/images/insert.png">Push Insertion</button>
+                        <button class="push"><img src="resources/images/insert.png">Push Insertion</button>
                     </div>
                 </div>
             </div> 

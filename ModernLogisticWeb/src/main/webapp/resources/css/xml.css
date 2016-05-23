@@ -833,37 +833,37 @@ body{
 	background:whitesmoke;
 }
 #header{
-	height: 150px;
+	height: 95px;
     border-radius: 5px 5px 5px 5px;
     background: -webkit-linear-gradient(top, silver, #ADD8E6);
 }
 .infoBar .infoBarLeft{
     float:left;
-    height: 150px;
+    height: 95px;
     width:30%;
     border-radius: 5px 0 0 5px;
 }
 .infoBar .infoBarLeft .infoBarIcon{
-    height: 90px;
-    width: 90px;
+    height: 70px;
+    width: 70px;
     border-radius: 50% 50% 50% 50%;
-    border: 2px solid whitesmoke;
-    margin-top: 2.25%;
-    margin-left: 5%;
+    border: 0.5px solid whitesmoke;
+    margin-top: 1.5%;
+    margin-left: 4%;
 }
 .infoBar .infoBarLeft .infoBarIcon img{
     border-radius: 50% 50% 50% 50%; 
 }
 .infoBar .infoBarCenter{
     float:left;
-    height: 30%;
+    height: 95px;
     width:39.8%;
     text-align: center;
 	text-transform: uppercase;
 }
 .infoBar .infoBarCenter h1{
     margin: 0;
-    line-height:150px;
+    line-height:95px;
 }
 .infoBar .infoBarRight{
     float:left;
@@ -872,9 +872,9 @@ body{
     border-radius: 0 5px 5px 0;
 }
 .infoBar .infoBarRight img{
-	margin-left: 70%;
+	margin-left: 85%;
 	opacity: 0.5;
-	margin-top: 2.25%;
+	margin-top: 1.5%;
 }
 .rightTA .dataSelection{
     width: 100%;
@@ -901,18 +901,21 @@ body{
     height: 35px;
     vertical-align: middle;
 }
+.ui-tabs .ui-tabs-panel{
+	height:72%;
+}
 .ui-tabs .ui-tabs-panel .leftBar{
     margin-top: 1.5%;
     width: 5%;
     height: 85%;
     position: absolute;
 }
-.ui-tabs .ui-tabs-panel .back,.ui-tabs .ui-tabs-panel .info{
+.ui-tabs .ui-tabs-panel .back,.ui-tabs .ui-tabs-panel .info,.ui-tabs .ui-tabs-panel .home{
     margin-top: 5%;
     width:40px;
     border-radius: 25px 25px 25px 25px;
 }
-.ui-tabs .ui-tabs-panel .back img{
+.ui-tabs .ui-tabs-panel .back img,.ui-tabs .ui-tabs-panel .info img,.ui-tabs .ui-tabs-panel .home img{
     border-radius: 25px 25px 25px 25px;
 }
 .ui-tabs .ui-tabs-panel .leftTA{
@@ -994,7 +997,7 @@ body{
     border-bottom: 1px solid whitesmoke;
 }
 .ui-tabs #loader{
-    idth: 150px;
+    width: 150px;
     height: 150px;
     position: fixed;
     top: 45%;
@@ -1005,12 +1008,55 @@ body{
     opacity: 0;
     z-index: 5;
 }
+.ui-tabs #errormessage{
+	width: 400px;
+    height: 200px;
+    background: -webkit-linear-gradient(#FFADAD, whitesmoke);
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -220px;
+    padding:1%;
+    display:none;
+    opacity: 0;
+    z-index: 5;
+    text-align:center;
+    border-radius:10px 10px 10px 10px;
+}
+.ui-tabs #applymessage{
+	width: 400px;
+    height: 200px;
+    background: -webkit-linear-gradient(#8FFFAB, whitesmoke);
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -220px;
+    padding:1%;
+    display:none;
+    opacity: 0;
+    z-index: 5;
+    text-align:center;
+    border-radius:10px 10px 10px 10px;
+}
+.ui-tabs #applymessage .applMessApply{
+	margin-top:10px;
+	margin-right: 20px;
+}
+.ui-tabs #applymessage .applMessCancel{
+	margin-top:10px;
+	margin-left: 20px;
+}
+.ui-tabs #errormessage .errMess, .ui-tabs #applymessage .applMess{
+	margin-top:60px;
+}
 .ui-tabs #overlay{
     z-index:3; /* пoдлoжкa дoлжнa быть выше слoев элементoв сaйтa, нo ниже слoя мoдaльнoгo oкнa */
 	position:fixed; /* всегдa перекрывaет весь сaйт */
 	background-color:#000; /* чернaя */
-	opacity:0.8; /* нo немнoгo прoзрaчнa */
-    filter: alpha(opacity=80);
+	opacity:0.6; /* нo немнoгo прoзрaчнa */
+    filter: alpha(opacity=60);
 	width:100%; 
 	height:100%; /* рaзмерoм вo весь экрaн */
     top:0; /* сверху и слевa 0, oбязaтельные свoйствa! */

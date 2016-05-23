@@ -13,6 +13,15 @@ $(document).ready(function(){
             $(this).stop().animate({width: "30px", height:"30px"});
         }
     );
+    $(".info img").hover(
+            function(){
+    	       $(this).stop().animate({width: "35px", height:"35px"});
+            }
+            ,             
+            function(){
+                $(this).stop().animate({width: "30px", height:"30px"});
+            }
+        );
     /* end */
     /* start .item:first */
     $(".item:first").hover(

@@ -29,30 +29,4 @@
 			<beans:value>/WEB-INF/classes/excel-config.xml</beans:value>
 		</beans:property>
 	</beans:bean>
-	
-	<!-- File Upload bean config-->
-    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-     	<!-- set the maximum file size in bytes -->
-    	<beans:property name="maxUploadSize" value="1000000"/>
-	</beans:bean>
-	
-	<!-- JDBC connection pool Bean definition -->
-	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<beans:property name="driverClassName" value="org.firebirdsql.jdbc.FBDriver"/>
-		<beans:property name="url" value="jdbc:firebirdsql:192.168.20.17/3050:alter"/>
-		<beans:property name="username" value="SYSDBA"/>
-		<beans:property name="password" value="strongpass"/>
-		<!-- <beans:property name="connectionProperties" value="[encoding=win1251;]"/> -->
-	</beans:bean>
-	
-	<beans:bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false">
-		<beans:property name="targetObject" ref="dataSource" />
-		<beans:property name="targetMethod" value="addConnectionProperty" />
-		<beans:property name="arguments">
-			<beans:list>
-				<beans:value>characterEncoding</beans:value>
-				<beans:value>windows-1251</beans:value>
-			</beans:list>
-		</beans:property>
-	</beans:bean>
 </beans:beans>

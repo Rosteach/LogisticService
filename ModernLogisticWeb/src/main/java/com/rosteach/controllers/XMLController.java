@@ -1,10 +1,12 @@
-package com.rosteach.controllers;
 /**
  * @author Rostislav Pavlenko
  * */
-import java.io.BufferedOutputStream;
+package com.rosteach.controllers;
+
 import java.io.File;
-import java.io.FileOutputStream;
+import java.sql.SQLException;
+
+import javax.xml.bind.JAXBException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.rosteach.DAO.InsertionDocInvoice;
+import com.rosteach.upload.FilesUploader;
+import com.rosteach.validators.FilesValidator;
+
 @Controller
 public class XMLController {
 
@@ -26,43 +32,57 @@ public class XMLController {
 	/**
 	 * File upload mapping
 	 * */
-	
 	@RequestMapping(value = "/uploadFile", method=RequestMethod.POST)
 	@ResponseBody 
-	public ModelAndView uploadFile(@RequestParam("file[]") MultipartFile file[]){
+	public ModelAndView uploadFile(@RequestParam("file[]") MultipartFile [] file){
 		ModelAndView modelAndView = new ModelAndView();
-		String fileName = null, result = "";
-		String rootPath = "C:/MLW/XMLDOC";
-		File directory = new File(rootPath+File.separator+"temp");
+		String result = "";
+		//checking and saving file block
+		FilesUploader files = new FilesUploader();
+		FilesValidator validator = new FilesValidator();
+		//validate all parameters
+		File directory = validator.checkDirectory(files.getDirectory());
+		validator.scanForFile(files.getRootPath());
 		
-		if(!directory.exists()){
-			directory.mkdirs();
+		if(validator.checkType(file)==true){
+			result = files.saveFiles(file,directory);
 		}
-		for (File myFile : new File(rootPath).listFiles()){
-			if(myFile.isFile()) 
-				myFile.delete();
+		else {
+			result = "Invalid type of file or files!!";
 		}
-		for(int i=0;i<=file.length-1;i++){
-			try {
-				
-				byte[] fileBytes = file[i].getBytes();	
-				fileName=file[i].getOriginalFilename();
-                File newFile = new File(directory.getAbsolutePath() + fileName);
-                
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(newFile));
-                stream.write(fileBytes);
-                stream.flush();
-                stream.close();
-                result+="--Server directory.path: " + rootPath+"\n"+"    File original name: " + file[i].getOriginalFilename()+"\n"+"    File content type: " + file[i].getContentType()+"\n"+"    File is saved under: "+newFile+"\n";
-            } 
-			catch (Exception e) {
-            	e.printStackTrace();
-            }
-		}
+		//redirect to our page with result 
 		RedirectView redirectView = new RedirectView("XML");
         redirectView.setStatusCode(HttpStatus.FOUND);
         modelAndView.setView(redirectView);
         modelAndView.addObject("message", result);
 		return modelAndView;
     }
+	//Tampering Data from xml into Database
+	@RequestMapping(value = "/Push", method = RequestMethod.GET)
+	public ModelAndView insertion(@RequestParam("dataBase") String dataBase,@RequestParam("name") String login,@RequestParam("password") String password) throws JAXBException,SQLException{
+		ModelAndView modelAndView = new ModelAndView();
+		String result = "";
+		InsertionDocInvoice insertion = new InsertionDocInvoice();
+		String data="";
+		if(dataBase.equals("alter_ros")){
+			data="jdbc:firebirdsql:192.168.20.85/3050:alter_ros";
+		} else if(dataBase.equals("Alter")){
+			data="jdbc:firebirdsql:192.168.20.17/3050:alter";
+		} else if(dataBase.equals("alter_curent")){
+			data="jdbc:firebirdsql:192.168.20.13/3050:alter_curent";
+		}	
+			//check date of document
+			if(insertion.checkDate()==true){
+				insertion.insertData(data,login,password);
+				result="Insertion into database was successfull, documents date: "+insertion.getDate();
+			}
+			else{
+				result="Insertion into database was denied, out of date: "+insertion.getDate()+" !";
+			}
+			RedirectView redirectView = new RedirectView("XML");
+			redirectView.setStatusCode(HttpStatus.FOUND);
+			modelAndView.setView(redirectView);
+			modelAndView.addObject("message", result);
+		return modelAndView;
+	}
 }

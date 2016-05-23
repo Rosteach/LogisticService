@@ -21,5 +21,38 @@
 						   ">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	 
+	<!-- File Upload bean config-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+     	<!-- set the maximum file size in bytes -->
+    	<property name="maxUploadSize" value="1000000"/>
+	</bean>
+	
+	<!-- JDBC connection pool Bean definition -->
+	<bean id="dataSourceAlter" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="org.firebirdsql.jdbc.FBDriver"/>
+		<property name="url" value="jdbc:firebirdsql:192.168.20.17/3050:alter"/>
+		<property name="username" value="SYSDBA"/>
+		<property name="password" value="strongpass"/>
+		<!-- <beans:property name="connectionProperties" value="[encoding=win1251;]"/> -->
+	</bean>
+	
+	<bean id="dataSourceSprinter" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="org.firebirdsql.jdbc.FBDriver"/>
+		<property name="url" value="jdbc:firebirdsql:192.168.20.16/3050:sprinter"/>
+		<property name="username" value="SYSDBA"/>
+		<property name="password" value="strongpass"/>
+		<!-- <beans:property name="connectionProperties" value="[encoding=win1251;]"/> -->
+	</bean>
+	
+	
+	<!-- <beans:bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false">
+		<beans:property name="targetObject" ref="dataSource" />
+		<beans:property name="targetMethod" value="addConnectionProperty" />
+		<beans:property name="arguments">
+			<beans:list>
+				<beans:value>characterEncoding</beans:value>
+				<beans:value>windows-1251</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean> -->
 </beans>

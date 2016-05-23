@@ -7,6 +7,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -18,7 +19,7 @@ public class GetReestrForaVeres{
 	private JdbcTemplate jdbcTemplate = null;
 	
 	@Autowired
-	public GetReestrForaVeres(DataSource dataSource) throws SQLException{
+	public GetReestrForaVeres(@Qualifier("dataSourceAlter")DataSource dataSource) throws SQLException{
 		this.jdbcTemplate = (new JdbcTemplate(dataSource));
 	}
 	

@@ -30,7 +30,10 @@
         </div>
 	</div>
 	<div id="content">
-        <div class="back"><a href="<%=request.getContextPath()%>/"><img src="resources/images/left_arrow.png" width=30px height=30px;/></a></div>
+		<div class="leftBar">
+	        <div class="back" title="Главная"><a href="<%=request.getContextPath()%>/"><img src="resources/images/left_arrow.png" width=30px height=30px/></a></div>
+			<div class="info" title="Info"><a href="toolsInfo"><img src="resources/images/info.png" width=30px height=30px;/></a></div>
+		</div>
 		<div class="firstline">
 			<div class="item"><a href="XML"><img src="resources/images/Xmltool.png" width=150px  height=150px/></a><div class="icon"><h5>XML Converting</h5></div></div>
 			<div class="item"><a href="XLS"><img src="resources/images/excel-256.png" width=150px  height=150px/></a><div class="icon"><h5>XLS Converting</h5></div></div>

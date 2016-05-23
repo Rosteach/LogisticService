@@ -7,5 +7,7 @@
 						   
 	<!-- When a controller returns excelDocument render the model with the com.rosteach.excel.ExcelReestrForaVeres class -->						   
  	<bean id="excelDocument"  class="com.rosteach.excel.ExcelReestrForaVeres" />
+ 							   
+ 	<bean id="excelSverka"  class="com.rosteach.excel.ExcelSverkaPoVigruzke" />
  	
 </beans>		

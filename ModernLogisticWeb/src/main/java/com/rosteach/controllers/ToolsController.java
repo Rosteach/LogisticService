@@ -18,4 +18,8 @@ public class ToolsController {
 		logger.info("Tools page downloaded with success!  Server date & time is: {}.",date);
 		return "Tools";
 	}
+	@RequestMapping(value = "/toolsInfo", method = RequestMethod.GET)
+	public String getInfo() {
+		return "toolsInfo";
+	}
 }

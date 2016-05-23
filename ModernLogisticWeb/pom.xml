@@ -152,6 +152,13 @@
 			<version>2.4</version>
 		</dependency> 
 		
+		<!-- Gson dependency --> 
+        <dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.6.2</version>
+		</dependency>
+		
 		<!-- Excel view -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>

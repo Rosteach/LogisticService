@@ -1,16 +1,19 @@
-package com.rosteach.DAO;
 /**
  * @author Pavlenko R. --Sprinter K-- 
  * Java XMLBinding
  * */
+package com.rosteach.DAO;
+
 import java.io.File;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.rosteach.xml.DocListInvoice;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.Properties;
 
 public class InsertionDocInvoice {
@@ -20,7 +23,47 @@ public class InsertionDocInvoice {
 	 * */
 	public static final String path = "C:/MLW/XMLDOC/";
 	public static final File pack = new File(path);
-
+	//method for checking date of input xml file
+	public boolean checkDate() throws JAXBException{
+		if(pack.isDirectory()){
+			String [] s= pack.list();
+			for(int i=0;i<s.length;i++){						
+				DocListInvoice document = (DocListInvoice)((JAXBContext.newInstance(DocListInvoice.class)).createUnmarshaller()).unmarshal(new File(path,s[i]));
+					for(int x=0;x<=document.getDocumentInvoice().size()-1;x++){
+						XMLGregorianCalendar date = document.getDocumentInvoice().get(x).getInvoiceHeader().get(0).getInvoiceDate();
+						System.out.println("--------------document-date--------------"+date.getDay());
+						
+						//get currentDate
+						LocalDate currentDate = LocalDate.now();
+						
+						System.out.println("--------------current---------------"+currentDate.getDayOfMonth());
+						if(currentDate.getDayOfMonth()>=date.getDay()){
+							return false;
+						}
+					}
+			}
+		}
+		return true;
+	}
+	
+	//method which return Date of the document 
+	public String getDate() throws JAXBException{
+		String result = "";
+		if(pack.isDirectory()){
+			String [] s= pack.list();
+			for(int i=0;i<s.length;i++){						
+				DocListInvoice document = (DocListInvoice)((JAXBContext.newInstance(DocListInvoice.class)).createUnmarshaller()).unmarshal(new File(path,s[i]));
+					for(int x=0;x<=document.getDocumentInvoice().size()-1;){
+						XMLGregorianCalendar date = document.getDocumentInvoice().get(x).getInvoiceHeader().get(0).getInvoiceDate();
+						result = date+"";
+						break;
+					}
+			}
+		}
+		return result;
+	}
+	
+	//method for insert input data from xml file(DoclistInvoice entity!)
 	public void insertData(String dataBase,String login, String password) throws JAXBException{ 	
 		
 		/**
@@ -32,10 +75,7 @@ public class InsertionDocInvoice {
 		 * */
 		if(pack.isDirectory()){
 			String s[] = pack.list();
-			String suffix = "xml";
-			for(int j=0;j<s.length;j++){
-				if(s[j].endsWith(suffix)){
-						
+			for(int j=0;j<s.length;j++){						
 				/**
 				 * Create an Object with JAXBContext with unmarshalling
 				 * */
@@ -140,5 +180,4 @@ public class InsertionDocInvoice {
 				}
 			}
 		}
-	}
 }

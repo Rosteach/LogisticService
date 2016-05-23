@@ -10,27 +10,26 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
-import com.rosteach.entities.ReestrForaVeres;
-import com.rosteach.entities.ReestrForaVeresList;
+import com.rosteach.entities.SverkaPoVigruzkeBoxList;
+import com.rosteach.entities.SverkaPoVigruzkeBox;
 
-public class ExcelReestrForaVeres extends AbstractExcelView{
-	
+public class ExcelSverkaPoVigruzke extends AbstractExcelView{
+
 	@Override
 	protected void buildExcelDocument(Map<String, Object> model, 
-			HSSFWorkbook workbook,
+			HSSFWorkbook workbook, 
 			HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		
 		// New Excel sheet
-		HSSFSheet excelSheet = workbook.createSheet("Veres");
+		HSSFSheet all = workbook.createSheet("AllSverka");
+		//HSSFSheet jacobs = workbook.createSheet("Jacobs");
 		//Excel file name change
-		response.setHeader("Content-Disposition", "attachment; filename=reestr.xls");
+		response.setHeader("Content-Disposition", "attachment; filename=sverka.xls");
 		
 		//create style for table header 
 		CellStyle styleHeader = workbook.createCellStyle();
@@ -40,12 +39,12 @@ public class ExcelReestrForaVeres extends AbstractExcelView{
 		styleHeader.setBorderTop(CellStyle.BORDER_THIN);
 		styleHeader.setBorderRight(CellStyle.BORDER_THIN);
 		styleHeader.setBorderLeft(CellStyle.BORDER_THIN);
-		
+			
 		//create font for header
 		Font font = workbook.createFont();
 		font.setColor(IndexedColors.BLACK.getIndex());
 		styleHeader.setFont(font);
-		
+			
 		//create style for rows
 		CellStyle styleRow = workbook.createCellStyle();
 		styleRow.setBorderBottom(HSSFCellStyle.BORDER_THIN);
@@ -54,87 +53,75 @@ public class ExcelReestrForaVeres extends AbstractExcelView{
 		styleRow.setBorderLeft(HSSFCellStyle.BORDER_THIN);
 		
 		//Get data from model
-		ReestrForaVeresList reestrList = (ReestrForaVeresList) model.get("reestrList");
+		SverkaPoVigruzkeBoxList sverkaList = (SverkaPoVigruzkeBoxList) model.get("sverkaList");
 		int rowCount = 3;
 		int idCount = 1;
 		int size = 0;
-		for(ReestrForaVeres row: reestrList.getReestrList()){
-			HSSFRow excelRow = excelSheet.createRow(rowCount++);	
+		for(SverkaPoVigruzkeBox row: sverkaList.getSverkaList()){
+			HSSFRow excelRow = all.createRow(rowCount++);	
 			
 			excelRow.createCell(0).setCellValue(idCount++);
 			excelRow.getCell(0).setCellStyle(styleRow);
 			
-			excelRow.createCell(1).setCellValue(row.getRegnumber());
+			excelRow.createCell(1).setCellValue(row.getClientsName());
 			excelRow.getCell(1).setCellStyle(styleRow);
 			
-			excelRow.createCell(2).setCellValue(row.getClientsName());
+			excelRow.createCell(2).setCellValue(row.getOrder());
 			excelRow.getCell(2).setCellStyle(styleRow);
 			
-			excelRow.createCell(3).setCellValue(row.getClientadresslocation());
+			excelRow.createCell(3).setCellValue(row.getShipment());
 			excelRow.getCell(3).setCellStyle(styleRow);
-			
-			excelRow.createCell(4).setCellValue(row.getComment1());
-			excelRow.getCell(4).setCellStyle(styleRow);
-			
-			excelRow.createCell(5).setCellValue(row.getFoundation());
-			excelRow.getCell(5).setCellStyle(styleRow);
-			
-			excelRow.createCell(6).setCellValue(row.getMainsumm());
-			excelRow.getCell(6).setCellStyle(styleRow);
 		}
-		
 		//set excel header
-		setExcelHeaderTable(excelSheet,styleHeader);
+		setExcelHeaderTable(all,styleHeader);
 		//set autosize for needed columns
 		for(int i=0; i<=5; i++){
-			excelSheet.autoSizeColumn(i);
+			all.autoSizeColumn(i);
 		}
-		
+				
 		size = idCount+2;
-		setExcelHeader(excelSheet,request,size);
-		excelSheet.setColumnWidth(6, 3000);
-		
-		setExcelHeaderName(excelSheet,request);
+		setExcelHeader(all,request,size);
+		all.setColumnWidth(6, 3000);
+			
+		setExcelHeaderName(all,request,workbook);
 	}
-	
 	public void setExcelHeaderTable(HSSFSheet excelSheet, CellStyle styleHeader){
 		//set Excel Header names second row
 		HSSFRow excelHeaderSecondRow = excelSheet.createRow(2);
+		//create our cells in 2 row
 		excelHeaderSecondRow.createCell(0).setCellValue("#");
 		excelHeaderSecondRow.getCell(0).setCellStyle(styleHeader);
 		
-		excelHeaderSecondRow.createCell(1).setCellValue("Рег.номер");
+		excelHeaderSecondRow.createCell(1).setCellValue("Имя клиента");
 		excelHeaderSecondRow.getCell(1).setCellStyle(styleHeader);
 		
-		excelHeaderSecondRow.createCell(2).setCellValue("Имя клиента");
+		excelHeaderSecondRow.createCell(2).setCellValue("Заказано");
 		excelHeaderSecondRow.getCell(2).setCellStyle(styleHeader);
 		
-		excelHeaderSecondRow.createCell(3).setCellValue("Адресс клиента");
+		excelHeaderSecondRow.createCell(3).setCellValue("Отгружено");
 		excelHeaderSecondRow.getCell(3).setCellStyle(styleHeader);
-	
-		excelHeaderSecondRow.createCell(4).setCellValue("Комментарий");
-		excelHeaderSecondRow.getCell(4).setCellStyle(styleHeader);
-		
-		excelHeaderSecondRow.createCell(5).setCellValue("Основание");
-		excelHeaderSecondRow.getCell(5).setCellStyle(styleHeader);
-		
-		excelHeaderSecondRow.createCell(6).setCellValue("Сумма");
-		excelHeaderSecondRow.getCell(6).setCellStyle(styleHeader);
 	}
 	public void setExcelHeader(HSSFSheet excelSheet, HttpServletRequest request, int size){
 		//set Excel Header names first row
 		HSSFRow excelHeaderFirstRow = excelSheet.createRow(1);	
-		String summ = "SUM(G4:G"+size+")";
+		String orderSum = "SUM(C4:C"+size+")";
+		String shipmentSum = "SUM(D4:D"+size+")";
 		
-		excelHeaderFirstRow.createCell(1).setCellValue("Начало периода: "+request.getParameter("startDate"));
-		excelHeaderFirstRow.createCell(3).setCellValue("Конец периода: "+request.getParameter("endDate"));
+		//excelHeaderFirstRow.createCell(0).setCellValue("Начало периода: "+request.getParameter("startDate"));
+		//excelHeaderFirstRow.createCell(2).setCellValue("Конец периода: "+request.getParameter("endDate"));
 		
-		excelHeaderFirstRow.createCell(6).setCellType(HSSFCell.CELL_TYPE_FORMULA);
-		excelHeaderFirstRow.getCell(6).setCellFormula(summ);
+		excelHeaderFirstRow.createCell(2).setCellType(HSSFCell.CELL_TYPE_FORMULA);
+		excelHeaderFirstRow.getCell(2).setCellFormula(orderSum);
+		
+		excelHeaderFirstRow.createCell(3).setCellType(HSSFCell.CELL_TYPE_FORMULA);
+		excelHeaderFirstRow.getCell(3).setCellFormula(shipmentSum);
 	}
-	public void setExcelHeaderName(HSSFSheet excelSheet, HttpServletRequest request){
+	public void setExcelHeaderName(HSSFSheet excelSheet, HttpServletRequest request, HSSFWorkbook workbook){
 		HSSFRow excelHeaderFirstRow = excelSheet.createRow(0);
-		
-		excelHeaderFirstRow.createCell(3).setCellValue("Фора Верес");
+		CellStyle style = workbook.createCellStyle();
+		style.setAlignment(CellStyle.ALIGN_CENTER);
+		excelHeaderFirstRow.createCell(1).setCellValue("Сверка по выгрузке(ящ)");
+		excelHeaderFirstRow.getCell(1).setCellStyle(style);
 	}
+
 }

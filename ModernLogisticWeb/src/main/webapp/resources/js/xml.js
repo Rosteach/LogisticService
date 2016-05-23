@@ -20,8 +20,7 @@ $(document).ready(function(){
             $(this).stop().animate({width: "30px", height:"30px"});
         }
     );
-    /* end */
-    /* start info */
+    
     $(".info img").hover(
         function(){
 	        $(this).stop().animate({width: "35px", height:"35px"});
@@ -31,6 +30,16 @@ $(document).ready(function(){
             $(this).stop().animate({width: "30px", height:"30px"});
         }
     );
+    
+    $(".home img").hover(
+        function(){
+    	   $(this).stop().animate({width: "35px", height:"35px"});
+        }
+        ,             
+        function(){
+           $(this).stop().animate({width: "30px", height:"30px"});
+        }
+     );
     /* end */
     /* start */
     $(".leftTA").hover(
@@ -111,15 +120,68 @@ $(document).ready(function(){
         }
     );
     /* end */
-    /* bottom Bar */
-    $(".pushButtRight").click( function(event){ // лoвим клик пo ссылки
-		   //event.preventDefault(); // выключaем стaндaртную рoль элементa
-		   $("#overlay").fadeIn(200, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
-		 	function(){ // пoсле выпoлнения предъидущей aнимaции
-				$("#loader") 
-					.css("display", "block") // убирaем у мoдaльнoгo oкнa display: none;
-					.animate({opacity: 1, top: "50%"}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
-		 });
+    /*start for loading*/
+    $(".pushButtRight").click(function(event){ // лoвим клик пo ссылкe
+		
+		var check = $('.textR').val();
+		var preffix = check.slice(0,2);
+		
+    	if(preffix=="nu"||preffix=="In"){
+    		event.preventDefault(); // выключaем стaндaртную рoль элементa
+    		$("#overlay").fadeIn(200, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
+    			function(){ // пoсле выпoлнения предъидущей aнимaции
+    					$("#errormessage")
+    						.css("display", "block") // убирaем у мoдaльнoгo oкнa display: none;
+    						.animate({opacity: 1, top: "50%"}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
+    					$('.errMess').html("Файл для выгрузки отсутствует! Неправильный тип данных, либо выгрузка произведена!");
+    		});
+    	}
+    	else if(preffix=="--"){
+    		event.preventDefault(); // выключaем стaндaртную рoль элементa
+    		$("#overlay").fadeIn(200, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
+    			function(){ // пoсле выпoлнения предъидущей aнимaции
+    					$("#applymessage")
+    						.css("display", "block") // убирaем у мoдaльнoгo oкнa display: none;
+    						.animate({opacity: 1, top: "50%"}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
+    					$('.applMess').html("Подтвердить выгрузку данных в базу!");
+    		});
+    	}
+    	
 	 });
-    /* end */ 
+    /* end */
+    /*errors buttons*/
+    $('.errMessCancel').click(function(){
+    	$('#overlay').fadeOut(100,
+    			function(){
+    		$("#errormessage").hide();
+    	});
+    });
+    
+    $('.applMessCancel').click(function(){
+    	$('#overlay').fadeOut(100,
+    			function(){
+    		$("#applymessage").hide();
+    	});
+    });
+    
+    $('.applMessApply').click(function(){
+    	$("#loader") 
+    		.css("display", "block") // убирaем у мoдaльнoгo oкнa display: none;
+    		.animate({opacity: 1, top: "50%"}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
+    	$('#applymessage').hide();
+    });
+    /*---------result of date testing----------*/
+    /* start */
+    $(".butt").hover(
+        function(){
+	       $(this).stop().css({"border-color": "#8a2820"});
+        }
+        ,             
+        function(){
+            $(this).stop().css({"border-color": "whitesmoke"});
+        }
+    );
+    /* end */
+    /*-------------AJAX------------*/
 });
+
