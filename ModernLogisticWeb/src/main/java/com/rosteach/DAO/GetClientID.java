@@ -16,9 +16,9 @@ import com.rosteach.xml.DocListInvoice;
 
 
 public class GetClientID {
-
 	/**
 	 * getClientId method with input File reference  
+	 * TESTSTESTSETSETSETSETETSETS
 	 * */
 	public int getClientId(String file, int index, String dataBase, String login,String password) throws JAXBException{
 		int temp=0;
